@@ -15,8 +15,12 @@ class DucksController < ApplicationController
 
   def create
     @duck = Duck.new(duck_params)
-    @duck.save
-    redirect_to duck_path(@duck)
+    if @duck.save
+      redirect_to duck_path(@duck)
+    else 
+      flash[:errors] = @duck.errors.full_messages
+      redirect_to new_duck_path
+    end
   end
 
   def edit
@@ -25,8 +29,12 @@ class DucksController < ApplicationController
 
   def update
     @duck = Duck.all.find(params[:id])
-    @duck.update(duck_params)
-    redirect_to duck_path(@duck)
+    if @duck.update(duck_params)
+      redirect_to duck_path(@duck)
+    else
+      flash[:errors] = @duck.errors.full_messages
+      redirect_to edit_duck_path
+    end
   end
 
   private
@@ -35,3 +43,5 @@ class DucksController < ApplicationController
     params.require(:duck).permit(:name, :description, :student_id)
   end
 end
+
+

@@ -1,3 +1,11 @@
+<% if flash[:errors] %>
+  <ul>
+    <% flash[:errors].each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for @duck do |f| %>
 <%= f.label "Name: " %>
 <%= f.text_field :name %>
@@ -10,3 +18,4 @@
 <br><br>
 <%= f.submit %>
 <% end %>
+
